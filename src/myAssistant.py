@@ -16,11 +16,11 @@ def inputCommand() -> str | sr.UnknownValueError:
     with micro as source:
         #r.pause_threshold = 3.0
         print("pronto ad ascoltare...")
-        audio = reco.listen(source)        
+        audio = reco.listen(source)
     try:
         question = reco.recognize_google(audio, language="it-IT").lower()
         print(f"L'utente ha detto: {question}")
-        return question    
+        return question
     except sr.UnknownValueError:
         print("Scusa non ho capito, puoi ripetere?")
         return sr.UnknownValueError
