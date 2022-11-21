@@ -3,4 +3,4 @@ pytest-mock
 pytest-cov
 pylint
 pyttsx3
-speech_recognition
+SpeechRecognition
