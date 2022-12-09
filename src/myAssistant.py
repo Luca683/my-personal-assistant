@@ -28,6 +28,7 @@ def inputCommand() -> str:
 
 if __name__ == "__main__":
     stop = False
+
     while not stop:
         try:
             command = inputCommand().lower()
@@ -42,8 +43,14 @@ if __name__ == "__main__":
         speak(command)
 
         result = "Scusa, non so ancora come eseguire questo comando"
-        if mod_volume.check_command(command):
+
+        if command == "stop":
+            stop = True
+            result = "Alla prossima!"
+
+        elif mod_volume.check_command(command):
             result = mod_volume.execute(command)
 
-        speak(result)
+        # Chain HERE "elif" for each module
 
+        speak(result)
