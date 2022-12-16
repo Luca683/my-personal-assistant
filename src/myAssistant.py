@@ -1,7 +1,7 @@
 from pyttsx3 import init
 import speech_recognition as sr
 
-import mod_volume
+from src.modules.mod_volume import ModuleVolume
 
 reco = sr.Recognizer()
 micro = sr.Microphone()
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     while not stop:
         try:
-            command = inputCommand().lower()
+            command = inputCommand()
             print("Lettura finita")
         except sr.UnknownValueError:
             speak("Scusa non ho capito, puoi ripetere?")
@@ -44,12 +44,14 @@ if __name__ == "__main__":
 
         result = "Scusa, non so ancora come eseguire questo comando"
 
+        module_volume = ModuleVolume()
+
         if command == "stop":
             stop = True
             result = "Alla prossima!"
 
-        elif mod_volume.check_command(command):
-            result = mod_volume.execute(command)
+        elif module_volume.check_command(command):
+            result = module_volume.execute(command)
 
         # Chain HERE "elif" for each module
 
