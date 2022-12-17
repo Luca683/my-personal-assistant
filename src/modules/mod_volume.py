@@ -15,23 +15,6 @@ def clamp_val(number: int) -> int:
     return number
 
 
-# Returns the first digital occurrence in the command, or -1 if it not exists
-def retrieve_number_in_string(string: str) -> int:
-    number = ""
-    flag = 0
-    for w in string:
-        if w.isdigit():
-            number += w
-            flag = 1
-        elif flag == 1:
-            break
-
-    if number == "":
-        return -1
-
-    return clamp_val(int(number))
-
-
 class ModuleVolume(MasterModule):
     def __init__(self):
         self.action_set = False
@@ -43,21 +26,20 @@ class ModuleVolume(MasterModule):
     def check_command(self, command: str) -> bool:
         set_regex = r"\b(?P<command>metti|imposta|setta)\b.*?\bvolume\b.+?\ba\b.+?\b(?P<value>\d+)\b"
 
-        if re.search(set_regex, command) is not None:
-            self.value = retrieve_number_in_string(command)
+        if (match := re.search(set_regex, command)) is not None:
+            value = int(match.group("value"))
+            self.value = clamp_val(value)
             self.action_set = True
             self.is_to = True
             return True
 
-        update_regex = r"\b(?P<command>alza|abbassa)\b.*?\bvolume\b.+?\b(a|di)\b.+?\b(?P<value>\d+)\b"
+        update_regex = r"\b(?P<command>alza|abbassa)\b.*?\bvolume\b.+?\b(?P<selector>a|di)\b.+?\b(?P<value>\d+)\b"
 
-        if re.search(update_regex, command) is not None:
-            if " di " in command:
-                self.is_by = True
-            else:
-                self.is_to = True
-
-            self.value = retrieve_number_in_string(command)
+        if (match := re.search(update_regex, command)) is not None:
+            value = int(match.group("value"))
+            self.value = clamp_val(value)
+            self.is_to = match.group("selector") == "a"
+            self.is_by = not self.is_to
             self.action_update = True
             return True
 

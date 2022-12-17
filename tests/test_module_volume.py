@@ -13,23 +13,6 @@ def test_clamp_val() -> None:
     assert mod_volume.clamp_val(-1) == 0
 
 
-number_retrieving_tests: List[dict] = [
-    {"command": "", "expected_val": -1},
-    {"command": "test", "expected_val": -1},
-    {"command": "test 10", "expected_val": 10},
-    {"command": "test 10 test 20", "expected_val": 10},
-    {"command": "test 1234 test 20 test 30", "expected_val": 100},
-    {"command": "test -1234 test 20 test 30", "expected_val": 100}
-]
-
-
-@pytest.mark.parametrize("test", number_retrieving_tests)
-def test_number_retrieving(test: dict) -> None:
-    assert type(mod_volume.retrieve_number_in_string(test["command"])) is int
-
-    assert mod_volume.retrieve_number_in_string(test["command"]) == test["expected_val"]
-
-
 functionalities_tests: List[dict] = [
     # False commands
     {"command": "", "expected_res": False},
