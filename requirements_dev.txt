@@ -1,3 +1,4 @@
+PyAudio
 pytest
 pytest-mock
 pytest-cov
