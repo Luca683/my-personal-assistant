@@ -3,4 +3,5 @@ pytest-mock
 pytest-cov
 pylint
 pyttsx3
+pycaw
 SpeechRecognition
