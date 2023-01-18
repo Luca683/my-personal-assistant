@@ -1,6 +1,6 @@
 from typing import List
 import pytest
-import src.modules.mod_volume as mod_volume
+from src.modules import mod_volume as mod_volume
 
 
 def test_clamp_val() -> None:
