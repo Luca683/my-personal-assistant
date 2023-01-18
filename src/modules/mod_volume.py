@@ -51,6 +51,7 @@ class ModuleVolume(MasterModule):
         try:
             # Retrieve audio settings
             devices = AudioUtilities.GetSpeakers()
+            # pylint: disable-next=protected-access
             interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
             volume_object = cast(interface, POINTER(IAudioEndpointVolume))
 
