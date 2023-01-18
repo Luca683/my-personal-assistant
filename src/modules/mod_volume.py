@@ -9,7 +9,8 @@ import re
 def clamp_val(number: int) -> int:
     if number < 0:
         return 0
-    elif number > 100:
+
+    if number > 100:
         return 100
 
     return number
@@ -71,7 +72,7 @@ class ModuleVolume(MasterModule):
             return self.value / 100
 
         # "... [Alza / Abbassa] ... DI ..."
-        elif self.is_by and self.action_update:
+        if self.is_by and self.action_update:
             # Current volume
             val = int(round(current_volume * 100))
 

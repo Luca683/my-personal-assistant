@@ -27,7 +27,7 @@ def inputCommand() -> str:
         question = reco.recognize_google(audio, language="it-IT").lower()
     except sr.UnknownValueError:
         question = "_NoQuestion"
-    
+
     return question
 
 
@@ -37,14 +37,14 @@ def findModule(command: str) -> MasterModule:
     if module_volume.check_command(command):
         return module_volume
 
-    return None  
+    return None
 
 
 def execute() -> bool:
     flag = False
 
     command = inputCommand()
-        
+
     # print("Ecco cosa ho sentito")
     # print(command)
     # speak("Ecco cosa ho sentito")
