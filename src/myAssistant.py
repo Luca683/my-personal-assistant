@@ -1,16 +1,20 @@
 from pyttsx3 import init
 import speech_recognition as sr
 
-from src.modules.master_module import MasterModule
-from src.modules.mod_volume import ModuleVolume
+import importlib
+mod_volume = importlib.import_module('mod_volume')
+master_module = importlib.import_module('master_module')
 
-reco = sr.Recognizer()
-micro = sr.Microphone()
 
-engine = init()
-voices = engine.getProperty("voices")
-engine.setProperty("voice", voices[0].id)
+try:
+    reco = sr.Recognizer()
+    micro = sr.Microphone()
 
+    engine = init()
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[41].id)
+except OSError:
+    print("Cannot define audio settings")
 
 def speak(response) -> None:
     engine.say(response)
@@ -21,18 +25,21 @@ def inputCommand() -> str:
     try:
         with micro as source:
             # r.pause_threshold = 3.0
-            # print("pronto ad ascoltare...")
+            print("pronto ad ascoltare...")
             audio = reco.listen(source)
 
         question = reco.recognize_google(audio, language="it-IT").lower()
+    except NameError:
+        question = "question_name_ex"
+    except AttributeError:
+        question = "question_attribute_ex"
     except sr.UnknownValueError:
         question = "_NoQuestion"
-
     return question
 
 
-def findModule(command: str) -> MasterModule:
-    module_volume = ModuleVolume()
+def findModule(command: str) -> master_module.MasterModule: #MasterModule:
+    module_volume = mod_volume.ModuleVolume() #ModuleVolume()
 
     if module_volume.check_command(command):
         return module_volume

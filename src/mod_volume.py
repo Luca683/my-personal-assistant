@@ -1,8 +1,7 @@
-from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-from .master_module import MasterModule
+import subprocess
 import re
+import importlib
+master_module = importlib.import_module('master_module')
 
 
 # Clamp values between 0 and 100
@@ -16,7 +15,7 @@ def clamp_val(number: int) -> int:
     return number
 
 
-class ModuleVolume(MasterModule):
+class ModuleVolume(master_module.MasterModule):
     def __init__(self):
         self.action_set = False
         self.is_to = False
@@ -47,43 +46,33 @@ class ModuleVolume(MasterModule):
         return False
 
     def execute(self, command: str) -> str:
-
         try:
-            # Retrieve audio settings
-            devices = AudioUtilities.GetSpeakers()
-            # pylint: disable-next=protected-access
-            interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-            volume_object = cast(interface, POINTER(IAudioEndpointVolume))
-
-            current_volume = volume_object.GetMasterVolumeLevelScalar()
-
-            val = self.find_new_volume(command, current_volume)
-
-            volume_object.SetMasterVolumeLevelScalar(val, None)
+            val = self.find_new_volume(command)
+            subprocess.run(["amixer", "-D", "pulse", "sset", "Master", val], check=True)
 
         except OSError:
-            print("There was a problem with the SO")
+            return "There was a problem with the SO"
 
         return "Ho modificato il volume"
 
     # Returns a nev volume value in the range [0,1]
-    def find_new_volume(self, command: str, current_volume: float) -> float:
+    def find_new_volume(self, command: str) -> float:
         # "... [Setta / Alza / Imposta]/[Alza / Abbassa] ... A ..."
         if self.is_to and (self.action_set or self.action_update):
-            return self.value / 100
+            return str(self.value) + "%"
 
         # "... [Alza / Abbassa] ... DI ..."
         if self.is_by and self.action_update:
             # Current volume
-            val = int(round(current_volume * 100))
+            val = str(self.value) + "%"
 
             # Up or down?
             if "alza" in command:
-                val = clamp_val(val + self.value) / 100
+                val += "+"
             elif "abbassa" in command:
-                val = clamp_val(val - self.value) / 100
+                val += "-"
 
             return val
 
         # Should not happen
-        return current_volume
+        return str(self.value) + "%"
