@@ -13,7 +13,10 @@ try:
     engine = init()
     voices = engine.getProperty("voices")
     engine.setProperty("voice", voices[41].id)
+
+    hasMicrophone = True
 except OSError:
+    hasMicrophone = False
     print("Cannot define audio settings")
 
 def speak(response) -> None:

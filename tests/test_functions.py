@@ -21,6 +21,10 @@ def test_inputCommand(mocker: MockerFixture) -> None:
 
     # assert
     assert isinstance(res, str)
+    
+    if(src.myAssistant.hasMicrophone is False):
+        assert res == "question_name_ex"
+
     assert res == mock_return.lower()
 
 
