@@ -22,6 +22,7 @@ class ModuleVolume(master_module.MasterModule):
         self.action_update = False
         self.is_by = False
         self.value = -1
+        self.error = False
 
     def check_command(self, command: str) -> bool:
         set_regex = r"\b(?P<command>metti|imposta|setta)\b.*?\bvolume\b.+?\ba\b.+?\b(?P<value>\d+)\b"
@@ -51,6 +52,7 @@ class ModuleVolume(master_module.MasterModule):
             subprocess.run(["amixer", "-D", "pulse", "sset", "Master", val], check=True)
 
         except OSError:
+            self.error = True
             return "There was a problem with the SO"
 
         return "Ho modificato il volume"

@@ -77,5 +77,9 @@ def test_functionalities(test: dict) -> None:
     assert m_volume.is_by == test["_by"]
     assert m_volume.value == test["expected_value"]
 
+    exe_res = m_volume.execute(test["command"])
+    if (m_volume.error is False):
+        assert exe_res == "Ho modificato il volume"
+
     # Assert execution
     assert m_volume.find_new_volume(test["command"]) == test["expected_res"]
