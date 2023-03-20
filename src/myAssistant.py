@@ -1,31 +1,83 @@
 from pyttsx3 import init
 import speech_recognition as sr
 
-reco = sr.Recognizer()
-micro = sr.Microphone()
+import importlib
+mod_volume = importlib.import_module('mod_volume')
+master_module = importlib.import_module('master_module')
 
-engine = init()
-voices = engine.getProperty("voices")
-engine.setProperty("voice", voices[0].id)
+
+try:
+    reco = sr.Recognizer()
+    micro = sr.Microphone()
+
+    engine = init()
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[41].id)
+
+    hasMicrophone = True
+except OSError:
+    hasMicrophone = False
+    print("Cannot define audio settings")
 
 def speak(response) -> None:
     engine.say(response)
     engine.runAndWait()
 
-def inputCommand() -> str | sr.UnknownValueError:
-    with micro as source:
-        #r.pause_threshold = 3.0
-        print("pronto ad ascoltare...")
-        audio = reco.listen(source)
-    try:
-        question = reco.recognize_google(audio, language="it-IT").lower()
-        print(f"L'utente ha detto: {question}")
-        return question
-    except sr.UnknownValueError:
-        print("Scusa non ho capito, puoi ripetere?")
-        return sr.UnknownValueError
 
-#if __name__ == "__main__":
-#    stop = False
-#    while stop==False:
-#        inputCommand()
+def inputCommand() -> str:
+    try:
+        with micro as source:
+            # r.pause_threshold = 3.0
+            print("pronto ad ascoltare...")
+            audio = reco.listen(source)
+
+        question = reco.recognize_google(audio, language="it-IT").lower()
+    except NameError:
+        question = "question_name_ex"
+    except AttributeError:
+        question = "question_attribute_ex"
+    except sr.UnknownValueError:
+        question = "_NoQuestion"
+    return question
+
+
+def findModule(command: str) -> master_module.MasterModule: #MasterModule:
+    module_volume = mod_volume.ModuleVolume() #ModuleVolume()
+
+    if module_volume.check_command(command):
+        return module_volume
+
+    return None
+
+
+def execute() -> bool:
+    flag = False
+
+    command = inputCommand()
+
+    # print("Ecco cosa ho sentito")
+    # print(command)
+    # speak("Ecco cosa ho sentito")
+    # speak(command)
+
+    result = "Scusa, non so ancora come eseguire questo comando"
+
+    if command == "stop":
+        flag = True
+        result = "Alla prossima!"
+    elif command == "_NoQuestion":
+        result = "Scusa, non ho capito"
+    else:
+        module = findModule(command)
+        if module is not None:
+            result = module.execute(command)
+
+    speak(result)
+    return flag
+
+
+if __name__ == "__main__":
+    stop = False
+
+    while not stop:
+        stop = execute()

@@ -1,11 +1,51 @@
-from src.myAssistant import *
-import speech_recognition as sr 
+import sys
+import os
 
-def test_inputCommand_a() -> None: #try
-    word_test = "ciao mondo"
-    word_speak = inputCommand()
-    assert word_test == word_speak
-    
-def test_inputCommand_b() -> None: #except
-    word_speak = inputCommand()
-    assert word_speak == sr.UnknownValueError     
+src_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(src_folder)
+
+from pytest_mock import MockerFixture
+import src.myAssistant
+
+from mod_volume import ModuleVolume
+
+# We cannot test inputCommand(), beacuse the objects used in it are not defined during tests runned from a virtual environment
+def test_inputCommand(mocker: MockerFixture) -> None:
+    # arrange
+    mock_return = "Ciao moNdo"
+    mocker.patch.object(src.myAssistant.reco, "listen", return_value=mock_return)
+    mocker.patch.object(src.myAssistant.reco, "recognize_google", return_value=mock_return)
+
+    # act
+    res = src.myAssistant.inputCommand()
+
+    # assert
+    assert isinstance(res, str)
+
+    if(src.myAssistant.hasMicrophone is False):
+        assert res == "question_name_ex"
+    else:
+        assert res == mock_return.lower()
+
+
+def test_findModule():
+    res = src.myAssistant.findModule("abbassa volume di 150")
+    assert isinstance(res, ModuleVolume)
+    res = src.myAssistant.findModule("Ciao mondo")
+    assert res is None
+
+
+def test_execution(mocker: MockerFixture) -> None:
+    # arrange
+    mock_return = "stop"
+    mocker.patch.object(src.myAssistant, "inputCommand", return_value=mock_return)
+
+    # Mock speak() or it will trigger during test
+    mocker.patch.object(src.myAssistant, "speak", return_value=None)
+
+    # act
+    res = src.myAssistant.execute()
+
+    # assert
+    assert isinstance(res, bool)
+    assert res is True
