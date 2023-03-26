@@ -32,8 +32,8 @@ def inputCommand() -> str:
             audio = reco.listen(source)
 
         question = reco.recognize_google(audio, language="it-IT").lower()
-    ##except NameError:
-    ##    question = "question_name_ex"
+    except NameError:
+        question = "question_name_ex"
     ##except AttributeError:
     ##    question = "question_attribute_ex"
     except sr.UnknownValueError:
