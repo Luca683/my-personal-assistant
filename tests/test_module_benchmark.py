@@ -14,9 +14,14 @@ functionalities_tests: List[dict] = [
     {"command": "", "check_command_res": False},
     {"command": "dammi i benchmark", "check_command_res": False},
     {"command": "sistema e cpu", "check_command_res": False},
-    {"command": "dammi i benchmark del sistema", "check_command_res": True, "isCpu": True, "isRam": True},
-    {"command": "dimmi i benchmark della cpu", "check_command_res": True, "isCpu": True, "isRam": False},
-    {"command": "dammi le prestazioni della ram", "check_command_res": True, "isCpu": False, "isRam": True}
+    {"command": "dammi i benchmark del sistema", "check_command_res": True, 
+     "hasCpu": True, "hasRam": True, "hasBattery": True},
+    {"command": "dimmi i benchmark della cpu", "check_command_res": True, 
+     "hasCpu": True, "hasRam": False, "hasBattery": False},
+    {"command": "dammi le prestazioni della ram", "check_command_res": True, 
+     "hasCpu": False, "hasRam": True, "hasBattery": False},
+    {"command": "dammi le prestazioni della ram e e della batteria", "check_command_res": True, 
+     "hasCpu": False, "hasRam": False, "hasBattery": True}
 ]
 
 
@@ -31,5 +36,6 @@ def test_functionalities(test: dict) -> None:
     if not test["check_command_res"]:
         return
     
-    assert m_bench.benchmark_ram == test["isRam"]
-    assert m_bench.benchmark_cpu == test["isCpu"]
+    assert m_bench.benchmark_ram == test["hasRam"]
+    assert m_bench.benchmark_cpu == test["hasCpu"]
+    assert m_bench.benchmark_battery == test["hasBattery"]

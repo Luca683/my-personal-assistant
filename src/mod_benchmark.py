@@ -7,19 +7,23 @@ class ModuleBenchmark(master_module.MasterModule):
     def __init__(self):
         self.benchmark_cpu = False
         self.benchmark_ram = False
+        self.benchmark_battery = False
 
     def check_command(self, command: str) -> bool:
-        # update_regex = r"\b(?P<command>alza|abbassa)\b.*?\bvolume\b.+?\b(?P<selector>a|di)\b.+?\b(?P<value>\d+)\b"
-        benchmark_regex = r"\b(benchmark|prestazioni)\b.*?(?P<system>(sistema|cpu|ram|memoria))+"
+        benchmark_regex = r"\b(benchmark|prestazioni)\b.*(\b(?P<sys>sistema)\b|\b(?P<cpu>cpu)\b|\b(?P<ram>ram|memoria)\b|\b(?P<bat>batteria)\b)"
 
         if (match := re.search(benchmark_regex, command)) is not None:
-            if match.group("system") == "sistema":
+            if match.group("sys") == "sistema":
                 self.benchmark_cpu = True
                 self.benchmark_ram = True
-            elif match.group("system") == "cpu":
-                self.benchmark_cpu = True
-            elif match.group("system") == "ram":
-                self.benchmark_ram = True
+                self.benchmark_battery = True
+            else:
+                if match.group("cpu") == "cpu":
+                    self.benchmark_cpu = True
+                if match.group("ram") == "ram":
+                    self.benchmark_ram = True
+                if match.group("bat") == "batteria":
+                    self.benchmark_battery = True
             
             return True
 
