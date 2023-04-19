@@ -48,7 +48,7 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 
     if module_volume.check_command(command):
         return module_volume
-    else if module_benchmark.check_command(command):
+    elif module_benchmark.check_command(command):
         return module_benchmark
 
     return None
@@ -57,7 +57,8 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 def execute() -> bool:
     flag = False
 
-    command = inputCommand()
+    command = "Dammi tutte le prestazioni della cpu"
+    # command = inputCommand()
 
     # print("Ecco cosa ho sentito")
     # print(command)
