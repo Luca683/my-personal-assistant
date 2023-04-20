@@ -25,16 +25,16 @@ class ModuleBenchmark(master_module.MasterModule):
                     self.benchmark_ram = True
                 if match.group("bat") == "batteria":
                     self.benchmark_battery = True
-            
+
             return True
 
         return False
-    
+
     def formatPercentage(self, value) -> str:
         if len(value.split('.')[0]) < 2:
             return value[:4]
-        else:
-            return value[:5]
+
+        return value[:5]
 
 
     def execute(self, command: str) -> str:
@@ -48,21 +48,22 @@ class ModuleBenchmark(master_module.MasterModule):
         # RAM
         if self.benchmark_ram:
             memPercent = str(psutil.virtual_memory()[2])
-            memUsage = str(str(psutil.virtual_memory()[3]/1000000000))   
+            memUsage = str(str(psutil.virtual_memory()[3]/1000000000))
             formattedRamUsage = self.formatPercentage(memUsage)
             result += 'la percentuale di utilizzo della RAM è del ' + memPercent + ' percento, '
             result += 'che ammonta a ' + formattedRamUsage + ' gigabyte utilizzati, '
-        
+
         if self.benchmark_battery:
             battery = str(psutil.sensors_battery()[0])
 
             if psutil.sensors_battery()[2]:
                 verb = 'd è'
             verb = ' non è'
-        
+
             result += 'la batteria è al ' + battery + ' percento, '
             result += 'e' + verb + ' alimentata'
 
-        print(result)
+        print(command)
+        # print(result)
 
         return result

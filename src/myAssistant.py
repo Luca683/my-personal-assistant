@@ -48,7 +48,7 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 
     if module_volume.check_command(command):
         return module_volume
-    elif module_benchmark.check_command(command):
+    if module_benchmark.check_command(command):
         return module_benchmark
 
     return None
