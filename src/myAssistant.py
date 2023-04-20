@@ -57,8 +57,7 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 def execute() -> bool:
     flag = False
 
-    command = "Dammi tutte le prestazioni della cpu"
-    # command = inputCommand()
+    command = inputCommand()
 
     # print("Ecco cosa ho sentito")
     # print(command)
