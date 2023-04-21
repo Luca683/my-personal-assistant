@@ -25,5 +25,5 @@ class ModuleJokes(master_module.MasterModule):
         return False
 
     def execute(self, command: str) -> str:
-
+        print(command)
         return pyjokes.get_joke(language =self.lang)
