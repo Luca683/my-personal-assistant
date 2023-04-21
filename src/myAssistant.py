@@ -56,8 +56,7 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 def execute() -> bool:
     flag = False
 
-    #command = inputCommand()
-    command = "dimmi una battuta "
+    command = inputCommand()
     # print("Ecco cosa ho sentito")
     # print(command)
     # speak("Ecco cosa ho sentito")
