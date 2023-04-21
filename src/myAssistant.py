@@ -3,6 +3,7 @@ import speech_recognition as sr
 
 import importlib
 mod_volume = importlib.import_module('mod_volume')
+mod_jokes = importlib.import_module('mod_jokes')
 master_module = importlib.import_module('master_module')
 
 
@@ -12,7 +13,7 @@ try:
 
     engine = init()
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[41].id)
+    engine.setProperty("voice", voices[0].id)
 
     hasMicrophone = True
 except OSError:
@@ -43,18 +44,20 @@ def inputCommand() -> str:
 
 def findModule(command: str) -> master_module.MasterModule: #MasterModule:
     module_volume = mod_volume.ModuleVolume() #ModuleVolume()
+    module_jokes = mod_jokes.ModuleJokes()
 
     if module_volume.check_command(command):
         return module_volume
-
+    if module_jokes.check_command(command):
+        return module_jokes
     return None
 
 
 def execute() -> bool:
     flag = False
 
-    command = inputCommand()
-
+    #command = inputCommand()
+    command = "dimmi una battuta "
     # print("Ecco cosa ho sentito")
     # print(command)
     # speak("Ecco cosa ho sentito")
