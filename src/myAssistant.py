@@ -13,7 +13,7 @@ try:
 
     engine = init()
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[41].id)
+    engine.setProperty("voice", voices[0].id)
 
     hasMicrophone = True
 except OSError:
