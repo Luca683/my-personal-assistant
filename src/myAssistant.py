@@ -3,6 +3,7 @@ import speech_recognition as sr
 
 import importlib
 mod_volume = importlib.import_module('mod_volume')
+mod_benchmark = importlib.import_module('mod_benchmark')
 master_module = importlib.import_module('master_module')
 
 
@@ -12,7 +13,7 @@ try:
 
     engine = init()
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[41].id)
+    engine.setProperty("voice", voices[0].id)
 
     hasMicrophone = True
 except OSError:
@@ -43,9 +44,12 @@ def inputCommand() -> str:
 
 def findModule(command: str) -> master_module.MasterModule: #MasterModule:
     module_volume = mod_volume.ModuleVolume() #ModuleVolume()
+    module_benchmark = mod_benchmark.ModuleBenchmark() #ModuleBenchmark()
 
     if module_volume.check_command(command):
         return module_volume
+    if module_benchmark.check_command(command):
+        return module_benchmark
 
     return None
 
