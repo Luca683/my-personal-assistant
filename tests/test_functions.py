@@ -42,6 +42,9 @@ functionalities_tests: List[dict] = [
     {"command": "stop", "check_command_res": True},
     {"command": "_NoQuestion", "check_command_res": False},
     {"command" : "metti volume a 20", "check_command_res": False},
+    {"command": "alza il volume di 10", "check_command_res": False},
+    {"command": "raccontami una barzelletta", "check_command_res": False},
+    {"command": "dammi le prestazioni della batteria", "check_command_res": False}
 ]
 
 @pytest.mark.parametrize("test", functionalities_tests)
