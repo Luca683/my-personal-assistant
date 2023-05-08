@@ -14,7 +14,15 @@ try:
 
     engine = init()
     voices = engine.getProperty("voices")
-    engine.setProperty("voice", voices[0].id)
+    
+    #search index of italian language in list "voices"
+    italian_index = 0
+    for i in range (len(voices)):
+        if voices[i].id == "italian":
+            italian_index = i
+            break
+
+    engine.setProperty("voice", voices[italian_index].id)
 
     hasMicrophone = True
 except OSError:
@@ -36,17 +44,15 @@ def inputCommand() -> str:
         question = reco.recognize_google(audio, language="it-IT").lower()
     except NameError:
         question = "question_name_ex"
-    ##except AttributeError:
-    ##    question = "question_attribute_ex"
     except sr.UnknownValueError:
         question = "_NoQuestion"
     return question
 
 
-def findModule(command: str) -> master_module.MasterModule: #MasterModule:
-    module_volume = mod_volume.ModuleVolume() #ModuleVolume()
+def findModule(command: str) -> master_module.MasterModule:
+    module_volume = mod_volume.ModuleVolume()
     module_jokes = mod_jokes.ModuleJokes()
-    module_benchmark = mod_benchmark.ModuleBenchmark() #ModuleBenchmark()
+    module_benchmark = mod_benchmark.ModuleBenchmark()
 
     if module_volume.check_command(command):
         return module_volume
@@ -59,16 +65,12 @@ def findModule(command: str) -> master_module.MasterModule: #MasterModule:
 
 
 def execute() -> bool:
-    flag = False
 
     command = inputCommand()
 
-    # print("Ecco cosa ho sentito")
-    # print(command)
-    # speak("Ecco cosa ho sentito")
-    # speak(command)
-
+    #Default value
     result = "Scusa, non so ancora come eseguire questo comando"
+    flag = False
 
     if command == "stop":
         flag = True
@@ -80,6 +82,7 @@ def execute() -> bool:
         if module is not None:
             result = module.execute(command)
 
+    print(result)
     speak(result)
     return flag
 
