@@ -14,12 +14,12 @@ try:
 
     engine = init()
     voices = engine.getProperty("voices")
-    
+
     #search index of italian language in list "voices"
     italian_index = 0
-    for i in range (len(voices)):
-        if voices[i].id == "italian":
-            italian_index = i
+    for index, item in enumerate(voices):
+        if voices[index].id == "italian":
+            italian_index = index
             break
 
     engine.setProperty("voice", voices[italian_index].id)
@@ -65,7 +65,6 @@ def findModule(command: str) -> master_module.MasterModule:
 
 
 def execute() -> bool:
-
     command = inputCommand()
 
     #Default value
