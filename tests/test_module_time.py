@@ -5,7 +5,6 @@ from pytest_mock import MockerFixture
 
 src_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
 sys.path.append(src_folder)
-import pyjokes
 from src.mod_time import ModuleTime
 from typing import List
 import pytest
