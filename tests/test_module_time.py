@@ -16,14 +16,25 @@ functionalities_tests: List[dict] = [
     {"command": "test", "check_command_res": False},
 
     {
-        "command": "che ore sono",
-        "check_command_res": True,
-    
+     "command": "che ore sono","check_command_res": True,
+     "time":True,"day":False,"date":False
+    },  
+    {
+     "command": "che ora è","check_command_res": True,
+     "time":True,"day":False,"date":False
     },
     {
-        "command": "che ora è",
-        "check_command_res": True,
+      "command":"dimmi l'ora e il giorno","check_command_res":True,
+      "time":True,"day":True,"date":False  
     },
+    { 
+    "command":"dimmi che giorno è oggi ","check_command_res":True,
+    "time":False,"day":True,"date":False
+    },
+    {
+     "command":"dimmi la data di oggi","check_command_res":True,
+     "time":False,"day":False,"date":True   
+    }
    
 ]
 
@@ -33,4 +44,10 @@ def test_functionalities(mocker: MockerFixture, test: dict) -> None:
     m_Time =ModuleTime()
     # Assert command check
     assert m_Time.check_command(test["command"]) == test["check_command_res"]
+    # On False commands we don't want to assert further
+    if not test["check_command_res"]:
+        return
 
+    assert m_Time.time == test["time"]
+    assert m_Time.day == test["day"]
+    assert m_Time.date == test["date"]
