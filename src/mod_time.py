@@ -32,7 +32,7 @@ class ModuleTime(master_module.MasterModule):
                 print(self.time)
             return True
         return False
-    
+
     def execute(self, command: str) -> str:
         print(command)
         result = ''
