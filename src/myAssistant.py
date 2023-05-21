@@ -4,6 +4,7 @@ import speech_recognition as sr
 import importlib
 mod_volume = importlib.import_module('mod_volume')
 mod_jokes = importlib.import_module('mod_jokes')
+mod_time=importlib.import_module('mod_time')
 mod_benchmark = importlib.import_module('mod_benchmark')
 master_module = importlib.import_module('master_module')
 
@@ -52,6 +53,7 @@ def inputCommand() -> str:
 def findModule(command: str) -> master_module.MasterModule:
     module_volume = mod_volume.ModuleVolume()
     module_jokes = mod_jokes.ModuleJokes()
+    module_time = mod_time.ModuleTime()
     module_benchmark = mod_benchmark.ModuleBenchmark()
 
     if module_volume.check_command(command):
@@ -60,6 +62,8 @@ def findModule(command: str) -> master_module.MasterModule:
         return module_jokes
     if module_benchmark.check_command(command):
         return module_benchmark
+    if module_time.check_command(command):
+        return module_time
 
     return None
 
