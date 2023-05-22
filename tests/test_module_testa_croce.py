@@ -35,7 +35,7 @@ money_value: List[dict] = [
 
 @pytest.mark.parametrize("test", functionalities_tests)
 @pytest.mark.parametrize("money", money_value)
-def test_functionalities(mocker: MockerFixture, test, money):
+def test_functionalities(mocker: MockerFixture, test: dict, money: dict) -> None:
     testa_croce = ModuleTestaCroce()
 
     #Test comando
