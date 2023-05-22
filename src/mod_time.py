@@ -10,7 +10,7 @@ def convert_month(month: int) -> str:
 
 def convert_week_day(day: str) -> str:
     array_english_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    array_italian_days = ["LunedÃ¬", "MartedÃ¬", "MercoledÃ¬", "GiovedÃ¬", "VenerdÃ¬", "Sabato", "Domenica"]
+    array_italian_days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
     return array_italian_days[array_english_days.index(day)]
 
 class ModuleTime(master_module.MasterModule):
@@ -36,13 +36,13 @@ class ModuleTime(master_module.MasterModule):
     def execute(self, command: str) -> str:
         print(command)
         result = ''
-        now = datetime.datetime.now() # now Ã¨ una stringa con giorno, data e ora di oggi
+        now = datetime.datetime.now() # now è una stringa con giorno, data e ora di oggi
         if self.time:
             current_time = now.strftime("Sono le: %H:%M ")
             result += current_time
         if self.day:
             week_day = convert_week_day(now.strftime("%A"))
-            current_day = "Oggi Ã¨: " + week_day + " "
+            current_day = "Oggi è: " + week_day + " "
             result += current_day
         if self.date:
             month = convert_month(now.month)
