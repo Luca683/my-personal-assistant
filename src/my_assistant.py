@@ -9,7 +9,7 @@ mod_benchmark = importlib.import_module('mod_benchmark')
 mod_testa_croce = importlib.import_module('mod_testa_croce')
 master_module = importlib.import_module('master_module')
 
-
+# Inizializzazione dell'assistente vocale + impostazione lingua italiana
 try:
     reco = sr.Recognizer()
     micro = sr.Microphone()
@@ -17,7 +17,7 @@ try:
     engine = init()
     voices = engine.getProperty("voices")
 
-    #search index of italian language in list "voices"
+    # Ricerca indice della lingua italiana nella lista "voices"
     italian_index = 0
     for index, item in enumerate(voices):
         if voices[index].id == "italian":
@@ -31,15 +31,15 @@ except OSError:
     hasMicrophone = False
     print("Cannot define audio settings")
 
-def speak(response) -> None:
+# Presa in input una stringa, questa verrà esposta a voce
+def speak(response: str) -> None:
     engine.say(response)
     engine.runAndWait()
 
-
+# Inseriamo il nostro comando (vocalmente), quindi questo verrà processato e convertito in una stringa
 def input_command() -> str:
     try:
         with micro as source:
-            # r.pause_threshold = 3.0
             print("pronto ad ascoltare...")
             audio = reco.listen(source)
 
@@ -50,7 +50,7 @@ def input_command() -> str:
         question = "_NoQuestion"
     return question
 
-
+# Funzione per stabilire quale modulo eseguire, ritorna quindi un'istanza del modulo interessato
 def find_module(command: str) -> master_module.MasterModule:
     module_volume = mod_volume.ModuleVolume()
     module_jokes = mod_jokes.ModuleJokes()
@@ -74,10 +74,11 @@ def find_module(command: str) -> master_module.MasterModule:
 def execute_command() -> bool:
     command = input_command()
 
-    #Default value
+    # Default value
     result = "Scusa, non so ancora come eseguire questo comando"
     flag = False
 
+    # Quale comando deve essere eseguito?
     if command == "stop":
         flag = True
         result = "Alla prossima!"
