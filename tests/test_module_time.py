@@ -26,11 +26,11 @@ functionalities_tests: List[dict] = [
     },
     {
       "command":"dimmi l'ora e il giorno","check_command_res":True,
-      "time":True,"day":True,"date":False, "expected_result":"Sono le: 15:30 Oggi Ã¨: MartedÃ¬ "  
+      "time":True,"day":True,"date":False, "expected_result":"Sono le: 15:30 Oggi è: Martedì "  
     },
     { 
     "command":"dimmi che giorno Ã¨ oggi ","check_command_res":True,
-    "time":False,"day":True,"date":False, "expected_result":"Oggi Ã¨: MartedÃ¬ " 
+    "time":False,"day":True,"date":False, "expected_result":"Oggi è: Martedì " 
     },
     {
      "command":"dimmi la data di oggi","check_command_res":True,
@@ -49,8 +49,6 @@ def test_functionalities(mocker: MockerFixture, test: dict) -> None:
     if not test["check_command_res"]:
         return
     
-    #mock_now = datetime.datetime(2023, 5, 16, 15, 30, 45, 123456)
-    #mocker.patch.object(datetime.datetime, "now", return_value=mock_now)
     mock_now = datetime.datetime(2023, 5, 16, 15, 30, 45, 123456)
     mocker.patch.object(datetime, 'datetime', mocker.Mock(wraps=datetime.datetime, now=mocker.Mock(return_value=mock_now)))
     
@@ -72,7 +70,7 @@ def test_convert_month(test: dict) -> None:
     assert result == test["expected_output"]
     
 week_day_tests: List[dict] = [
-    {"input": "Monday", "expected_output": "LunedÃ¬"},
+    {"input": "Monday", "expected_output": "Lunedì"},
     {"input": "Saturday", "expected_output": "Sabato"},
     {"input": "Sunday", "expected_output": "Domenica"},
 ]
