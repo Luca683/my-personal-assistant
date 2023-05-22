@@ -36,7 +36,7 @@ def speak(response) -> None:
     engine.runAndWait()
 
 
-def inputCommand() -> str:
+def input_command() -> str:
     try:
         with micro as source:
             # r.pause_threshold = 3.0
@@ -51,7 +51,7 @@ def inputCommand() -> str:
     return question
 
 
-def findModule(command: str) -> master_module.MasterModule:
+def find_module(command: str) -> master_module.MasterModule:
     module_volume = mod_volume.ModuleVolume()
     module_jokes = mod_jokes.ModuleJokes()
     module_time = mod_time.ModuleTime()
@@ -71,8 +71,8 @@ def findModule(command: str) -> master_module.MasterModule:
     return None
 
 
-def execute() -> bool:
-    command = inputCommand()
+def execute_command() -> bool:
+    command = input_command()
 
     #Default value
     result = "Scusa, non so ancora come eseguire questo comando"
@@ -84,7 +84,7 @@ def execute() -> bool:
     elif command == "_NoQuestion":
         result = "Scusa, non ho capito"
     else:
-        module = findModule(command)
+        module = find_module(command)
         if module is not None:
             result = module.execute(command)
 
@@ -97,4 +97,4 @@ if __name__ == "__main__":
     stop = False
 
     while not stop:
-        stop = execute()
+        stop = execute_command()
