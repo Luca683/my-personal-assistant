@@ -6,6 +6,7 @@ mod_volume = importlib.import_module('mod_volume')
 mod_jokes = importlib.import_module('mod_jokes')
 mod_time=importlib.import_module('mod_time')
 mod_benchmark = importlib.import_module('mod_benchmark')
+mod_testa_croce = importlib.import_module('mod_testa_croce')
 master_module = importlib.import_module('master_module')
 
 
@@ -55,6 +56,7 @@ def findModule(command: str) -> master_module.MasterModule:
     module_jokes = mod_jokes.ModuleJokes()
     module_time = mod_time.ModuleTime()
     module_benchmark = mod_benchmark.ModuleBenchmark()
+    module_testa_croce = mod_testa_croce.ModuleTestaCroce()
 
     if module_volume.check_command(command):
         return module_volume
@@ -64,7 +66,8 @@ def findModule(command: str) -> master_module.MasterModule:
         return module_benchmark
     if module_time.check_command(command):
         return module_time
-
+    if module_testa_croce.check_command(command):
+        return module_testa_croce
     return None
 
 
