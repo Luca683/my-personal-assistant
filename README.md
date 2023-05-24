@@ -19,10 +19,14 @@ pip install -r requirements_dev.txt
 Se esegui il programma da **Linux**, sarà necessario aggiungere le seguenti dipendenze da terminale:
 
 ```shell
-sudo apt install portaudio19-dev
-sudo apt install pulseaudio
-sudo apt install espeak
+sudo apt install portaudio19-dev pulseaudio espeak
 ```
+
+Se esegui il programma da **MacOS**, sarà necessario aggiungere le seguenti dipendenze da terminale:
+```shell
+brew install pulseaudio espeak
+```
+Note: con Mac OS 
 
 Esegui poi il programma utilizzando il seguente comando (all'interno della cartella src):
 ```shell
