@@ -27,8 +27,9 @@ class ModuleVolume(master_module.MasterModule):
     def check_command(self, command: str) -> bool:
         set_regex = r"\b(?P<command>metti|imposta|setta)\b.*?\bvolume\b.+?\ba\b.+?\b(?P<value>\d+)\b"
 
-        if (match := re.search(set_regex, command)) is not None:
-            value = int(match.group("value"))
+        _match = re.search(set_regex, command)
+        if _match is not None:
+            value = int(_match.group("value"))
             self.value = clamp_val(value)
             self.action_set = True
             self.is_to = True
@@ -36,10 +37,11 @@ class ModuleVolume(master_module.MasterModule):
 
         update_regex = r"\b(?P<command>alza|abbassa)\b.*?\bvolume\b.+?\b(?P<selector>a|di)\b.+?\b(?P<value>\d+)\b"
 
-        if (match := re.search(update_regex, command)) is not None:
-            value = int(match.group("value"))
+        _match = re.search(update_regex, command)
+        if _match is not None:
+            value = int(_match.group("value"))
             self.value = clamp_val(value)
-            self.is_to = match.group("selector") == "a"
+            self.is_to = _match.group("selector") == "a"
             self.is_by = not self.is_to
             self.action_update = True
             return True

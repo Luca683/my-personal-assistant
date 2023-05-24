@@ -19,5 +19,5 @@ class ModuleTestaCroce(master_module.MasterModule):
         print("Eseguo comando: "+command)
         moneta = random.randint(0, 1) # 0 = Testa, 1 = Croce
         if moneta==0:
-            return "E' uscito testa"
-        return "E' uscito croce"
+            return "È uscito testa"
+        return "È uscito croce"

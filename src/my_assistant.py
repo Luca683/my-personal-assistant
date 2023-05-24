@@ -1,7 +1,9 @@
 from pyttsx3 import init
 import speech_recognition as sr
-
+import sys
+import os
 import importlib
+
 mod_volume = importlib.import_module('mod_volume')
 mod_jokes = importlib.import_module('mod_jokes')
 mod_time=importlib.import_module('mod_time')
@@ -14,7 +16,13 @@ try:
     reco = sr.Recognizer()
     micro = sr.Microphone()
 
-    engine = init()
+    if sys.platform == 'Linux':
+        engine = init()  # espeak
+    elif sys.platform == 'darwin':
+        engine = init(driverName='dummy')
+    else: # sys.platform == 'win32':
+        engine = init(driverName='sapi5')
+
     voices = engine.getProperty("voices")
 
     # Ricerca indice della lingua italiana nella lista "voices"
@@ -33,8 +41,11 @@ except OSError:
 
 # Presa in input una stringa, questa verrà esposta a voce
 def speak(response: str) -> None:
-    engine.say(response)
-    engine.runAndWait()
+    if sys.platform == 'Linux':
+        engine.say(response)
+        engine.runAndWait()
+    elif sys.platform == 'darwin':
+        os.system(f"echo '{response}' | espeak -v it")
 
 # Inseriamo il nostro comando (vocalmente), quindi questo verrà processato e convertito in una stringa
 def input_command() -> str:

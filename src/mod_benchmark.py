@@ -23,9 +23,10 @@ class ModuleBenchmark(master_module.MasterModule):
     def check_command(self, command: str) -> bool:
         benchmark_regex = r"\b(benchmark|prestazioni)\b.*(?P<selector>\bsistema\b|\bprocessore\b|\bram|memoria\b|\bbatteria\b)"
 
-        if (match := re.search(benchmark_regex, command)) is not None:
+        _match = re.search(benchmark_regex, command)
+        if _match is not None:
             # Se il selector restituisce la parola "sistema", allora inseriamo tutte le info nella risposta
-            if match.group("selector") == "sistema":
+            if _match.group("selector") == "sistema":
                 self.benchmark_cpu = True
                 self.benchmark_ram = True
                 self.benchmark_battery = True
