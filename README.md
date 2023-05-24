@@ -26,7 +26,7 @@ Se esegui il programma da **MacOS**, sarà necessario aggiungere le seguenti dip
 ```shell
 brew install pulseaudio espeak
 ```
-Note: con Mac OS 
+Note: con Mac OS è possibile dover utilizzare una versione di python 3.7.x per la compatibilità con la libreria pyttsx3.
 
 Esegui poi il programma utilizzando il seguente comando (all'interno della cartella src):
 ```shell
