@@ -41,7 +41,7 @@ except OSError:
 
 # Presa in input una stringa, questa verrà esposta a voce
 def speak(response: str) -> None:
-    if sys.platform == 'Linux':
+    if sys.platform == 'Linux' or sys.platform == 'win32':
         engine.say(response)
         engine.runAndWait()
     elif sys.platform == 'darwin':
