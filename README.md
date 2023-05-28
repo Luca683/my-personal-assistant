@@ -13,6 +13,11 @@ Assicuriamoci di avere installato la versione di Python 3.10.9.
 Per utilizzare My Personal Assistant, è importante prima di tutto installare le dipendenze necessarie, utilizzando il seguente comando sul terminale:
 
 ```shell
+pip install -r requirements.txt
+```
+Se sei interessato anche ad eseguire i test allora includi anche le seguenti dipendenze:
+
+```shell
 pip install -r requirements_dev.txt
 ```
 
