@@ -1,0 +1,6 @@
+importlib-metadata
+pyttsx3
+pycaw
+SpeechRecognition
+pyaudio
+pyjokes

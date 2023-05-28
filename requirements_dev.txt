@@ -1,10 +1,5 @@
-importlib-metadata
 pytest
 pytest-mock
 pytest-cov
 pylint
-pyttsx3
-pycaw
-SpeechRecognition
-pyaudio
-pyjokes
+
