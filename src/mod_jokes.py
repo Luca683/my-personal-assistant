@@ -12,13 +12,14 @@ class ModuleJokes(master_module.MasterModule):
     def check_command(self, command: str) -> bool:
         regex = r"\b(raccontami|fammi|dimmi)\b.*?\b(barzelletta|battuta)\b.*?(\b(?P<lingua>inglese|tedesco|spagnolo)\b)*$"
         print("check")
-        if (match := re.search(regex, command)) is not None:
-            print(match.group("lingua"))
-            if match.group("lingua") == "inglese":
+        _match = re.search(regex, command)
+        if _match is not None:
+            print(_match.group("lingua"))
+            if _match.group("lingua") == "inglese":
                 self.lang = "en"
-            elif match.group("lingua") == "tedesco":
+            elif _match.group("lingua") == "tedesco":
                 self.lang = "de"
-            elif match.group("lingua") == "spagnolo":
+            elif _match.group("lingua") == "spagnolo":
                 self.lang = "es"
             return True
 

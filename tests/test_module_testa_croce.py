@@ -29,8 +29,8 @@ functionalities_tests: List[dict] = [
 ]
 
 money_value: List[dict] = [
-    {"value": 0, "response": "E' uscito testa"},
-    {"value": 1, "response": "E' uscito croce"}
+    {"value": 0, "response": "È uscito testa"},
+    {"value": 1, "response": "È uscito croce"}
 ]
 
 @pytest.mark.parametrize("test", functionalities_tests)
